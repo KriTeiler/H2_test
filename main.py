@@ -3,17 +3,19 @@
 # This is a simple echo bot using the decorator mechanism.
 # It echoes any incoming text messages.
 import asyncio
-import os
 
 from telebot.async_telebot import AsyncTeleBot
+from dotenv import load_dotenv
+import os
 
-bot = AsyncTeleBot (os.environ["TG_BOT"])
+load_dotenv()
+bot = AsyncTeleBot (os.getenv('TOKEN'))
 
 
 # Handle '/start' and '/help'
 @bot.message_handler(commands=['help', 'start'])
 async def send_welcome(message):
-    text = 'Hi, I am EchoBot.\nJust write me something and I will repeat it!'
+    text = 'Привет, мы оба знаем зачем ты здесь.'
     await bot.reply_to(message, text)
 
 
@@ -22,5 +24,5 @@ async def send_welcome(message):
 async def echo_message(message):
     await bot.reply_to(message, message.text)
 
-
-asyncio.run(bot.polling())
+if __name__ == '__main__':
+    asyncio.run(bot.polling())
